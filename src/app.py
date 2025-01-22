@@ -68,7 +68,7 @@ def add_new_member():
     lucky_numbers_list = new_member["lucky_numbers"].replace(" ", "").split(",")
     for number in lucky_numbers_list:
         if not str(number).isnumeric():
-            return jsonify(f"lucky numbers shall only contain numbers separated by commas.")
+            return jsonify(f"lucky numbers shall only contain numbers separated by commas."), 400
     response_body = jackson_family.add_member(new_member)
     print("Incoming request with the following body", response_body)
     return jsonify(jackson_family.get_all_members()), 200
