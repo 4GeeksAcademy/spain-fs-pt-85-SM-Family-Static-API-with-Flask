@@ -65,10 +65,11 @@ def add_new_member():
         return jsonify("age value should only contain numbers"), 400
     if int(new_member["age"]) <= 0:
         return jsonify("age value should be greater than 0"), 400
-    lucky_numbers_list = new_member["lucky_numbers"].replace(" ", "").split(",")
-    for number in lucky_numbers_list:
+    if type(new_member["lucky_numbers"]) is not list:
+        return jsonify("lucky_numbers should be a list of numbers"), 400
+    for number in new_member["lucky_numbers"]:
         if not str(number).isnumeric():
-            return jsonify(f"lucky numbers shall only contain numbers separated by commas."), 400
+            return jsonify("lucky_numbers should be a list of numbers"), 400
     response_body = jackson_family.add_member(new_member)
     print("Incoming request with the following body", response_body)
     return jsonify(jackson_family.get_all_members()), 200
